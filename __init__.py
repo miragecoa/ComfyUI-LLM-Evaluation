@@ -1,19 +1,37 @@
-from .nodes import LoadFileNode, SelectItemByIndexNode, SelectItemByKeyNode, LLMAPILoader, LLMAPIChat
+from .nodes import WriteToJson, DeleteFile, DownloadHuggingFaceModel, PullOllamaModel, UpdateLLMResultToJson, LoadFileNode, SelectItemByIndexNode, SelectItemByKeyNode, JSONToListNode, MathOperationNode
+from .metrics import F1ScoreNode, AccuracyNode
+
 
 NODE_CLASS_MAPPINGS = {
     "LoadFileNode": LoadFileNode,
     "SelectItemByIndexNode": SelectItemByIndexNode,
     "SelectItemByKeyNode": SelectItemByKeyNode,
-    "LLMAPILoader": LLMAPILoader,
-    "LLMAPIChat": LLMAPIChat
+    "JSONToListNode": JSONToListNode,
+    "MathOperationNode": MathOperationNode,
+    "F1ScoreNode": F1ScoreNode,
+    "AccuracyNode": AccuracyNode,
+    "UpdateLLMResultToJson": UpdateLLMResultToJson,
+    "PullOllamaModel": PullOllamaModel,
+    "DownloadHuggingFaceModel": DownloadHuggingFaceModel,
+    "DeleteFile": DeleteFile,
+    "WriteToJson": WriteToJson,
+
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadFileNode": "Load File",
     "SelectItemByIndexNode": "Select Item by Index",
     "SelectItemByKeyNode": "Select Item by Key",
-    "LLMAPILoader": "LLMAPILoader",
-    "LLMAPIChat": "LLMAPIChat"
+    "JSONToListNode": "JSONToListNode",
+    "MathOperationNode": "MathOperationNode",
+    "F1ScoreNode": "F1ScoreNode",
+    "AccuracyNode": "AccuracyNode",
+    "UpdateLLMResultToJson": "UpdateLLMResultToJson",
+    "PullOllamaModel": "PullOllamaModel",
+    "DownloadHuggingFaceModel": "DownloadHuggingFaceModel",
+    "DeleteFile": "DeleteFile",
+    "WriteToJson": "WriteToJson",
+
 }
 
 __all__ = ["NODE_CLASS_MAPPINGS", "NODE_DISPLAY_NAME_MAPPINGS"]
