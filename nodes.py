@@ -11,6 +11,365 @@ from tqdm import tqdm
 import os
 from huggingface_hub import snapshot_download, login
 import folder_paths
+import torch
+
+
+class JsonResultGenerator:
+    def __init__(self):
+        pass
+
+    OUTPUT_NODE = True
+
+    @classmethod
+    def IS_CHANGED(cls, *args):
+        # Always consider this node as changed to ensure it runs
+        return float("NaN")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "file_path": ("STRING", {"forceInput": True}),  # Path to the JSON file
+                "model_type": ("STRING", {"default": "pretrained"}),  # Model type
+                "model_dtype": ("STRING", {"default": "torch.float16"}),  # Model data type
+                "model_name": ("STRING", {"default": "Qwen/Qwen2-7B-Instruct"}),  # Model name
+                "model_sha": ("STRING", {"default": "main"}),  # Model SHA
+                "task_name": ("STRING", {"default": ""}),  # Task name for results
+            },
+            "optional": {
+                "metric1_name": ("STRING", {"default": "F1"}),
+                "metric1_score": ("FLOAT", {"forceInput": True}),
+                "metric2_name": ("STRING", {"default": "Acc"}),
+                "metric2_score": ("FLOAT", {"forceInput": True}),
+                "metric3_name": ("STRING", {"default": ""}),
+                "metric3_score": ("FLOAT", {"forceInput": True}),
+                "metric4_name": ("STRING", {"default": ""}),
+                "metric4_score": ("FLOAT", {"forceInput": True}),
+                "metric5_name": ("STRING", {"default": ""}),
+                "metric5_score": ("FLOAT", {"forceInput": True}),
+            },
+        }
+
+    RETURN_TYPES = ("STRING", "STRING",)
+    RETURN_NAMES = ("json_file_path", "json_content",)
+    FUNCTION = "initialize_json"
+    CATEGORY = "LLM Evaluation"
+
+    def initialize_json(
+        self, file_path, model_type, model_dtype, model_name, model_sha,
+        task_name, metric1_name="", metric1_score=0.0, metric2_name="",
+        metric2_score=0.0, metric3_name="", metric3_score=0.0,
+        metric4_name="", metric4_score=0.0, metric5_name="", metric5_score=0.0
+    ):
+        try:
+            # Initialize json_data with the given config
+            json_data = {
+                "config": {
+                    "model_type": model_type,
+                    "model_dtype": model_dtype,
+                    "model_name": model_name,
+                    "model_sha": model_sha
+                },
+                "results": {}
+            }
+
+            # If the file already exists, load its content
+            if os.path.exists(file_path):
+                with open(file_path, "r") as json_file:
+                    existing_data = json.load(json_file)
+                    # Preserve the existing config
+                    json_data["config"] = existing_data.get("config", json_data["config"])
+                    # Copy over existing results
+                    json_data["results"] = existing_data.get("results", {})
+
+            # Prepare the new task results
+            if task_name:
+                if task_name not in json_data["results"]:
+                    json_data["results"][task_name] = {}
+
+                # Add metrics only if names are provided
+                if metric1_name and metric1_score:
+                    json_data["results"][task_name][metric1_name] = metric1_score
+                if metric2_name and metric2_score:
+                    json_data["results"][task_name][metric2_name] = metric2_score
+                if metric3_name and metric3_score:
+                    json_data["results"][task_name][metric3_name] = metric3_score
+                if metric4_name and metric4_score:
+                    json_data["results"][task_name][metric4_name] = metric4_score
+                if metric5_name and metric5_score:
+                    json_data["results"][task_name][metric5_name] = metric5_score
+
+            # Convert the JSON data to a string
+            json_content = json.dumps(json_data, indent=4)
+
+            # Save the JSON to the specified file path
+            with open(file_path, "w") as json_file:
+                json_file.write(json_content)
+
+            return (file_path, json_content)
+        except Exception as e:
+            return (f"Error creating or updating JSON file: {e}", f"Error creating or updating JSON content: {e}")
+
+
+class LLMLocalLoader:
+    def __init__(self):
+        self.id = hash(str(self))
+        self.device = ""
+        self.dtype = ""
+        self.model_name_or_path = ""
+        self.model = ""
+        self.tokenizer = ""
+        self.is_locked = False
+
+    @classmethod
+    def IS_CHANGED(cls, *args):
+        # Always consider this node as changed to ensure it runs
+        return float("NaN")
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "model_name_or_path": ("STRING", {"default": ""}),
+                "device": (
+                    ["auto", "cuda", "cpu", "mps"],
+                    {
+                        "default": "auto",
+                    },
+                ),
+                "dtype": (
+                    ["float32", "float16","bfloat16", "int8", "int4"],
+                    {
+                        "default": "float32",
+                    },
+                ),
+                "is_locked": ("BOOLEAN", {"default": True}),
+            }
+        }
+
+    RETURN_TYPES = (
+        "CUSTOM",
+        "CUSTOM",
+    )
+    RETURN_NAMES = (
+        "model",
+        "tokenizer",
+    )
+
+    FUNCTION = "chatbot"
+
+    # OUTPUT_NODE = False
+
+    CATEGORY = "LLM Evaluation"
+
+    def chatbot(self, model_name_or_path, device, dtype, is_locked=True):
+        self.is_locked = is_locked
+        if self.is_locked == False:
+            setattr(LLMLocalLoader, "IS_CHANGED", LLMLocalLoader.original_IS_CHANGED)
+        else:
+            # 如果方法存在，则删除
+            if hasattr(LLMLocalLoader, "IS_CHANGED"):
+                delattr(LLMLocalLoader, "IS_CHANGED")
+        if device == "auto":
+            device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+
+        if (
+            self.device != device
+            or self.dtype != dtype
+            or self.model_name_or_path != model_name_or_path
+            or is_locked == False
+        ):
+            del self.model
+            del self.tokenizer
+            if self.device == "cuda":
+                torch.cuda.empty_cache()
+                gc.collect()
+            # 对于 CPU 和 MPS 设备，不需要清空 CUDA 缓存
+            elif self.device == "cpu" or self.device == "mps":
+                gc.collect()
+            self.model = ""
+            self.tokenizer = ""
+            self.model_name_or_path = model_name_or_path
+            self.device = device
+            self.dtype = dtype
+            model_kwargs = {
+                'device_map': device,
+            }
+
+            if dtype == "float16":
+                model_kwargs['torch_dtype'] = torch.float16
+            elif dtype == "bfloat16":
+                model_kwargs['torch_dtype'] = torch.bfloat16
+            elif dtype in ["int8", "int4"]:
+                model_kwargs['quantization_config'] = BitsAndBytesConfig(load_in_8bit=(dtype == "int8"), load_in_4bit=(dtype == "int4"))
+
+            config = AutoConfig.from_pretrained(model_name_or_path, **model_kwargs)
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
+
+            if config.model_type == "t5":
+                self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path, **model_kwargs)
+            elif config.model_type in ["gpt2", "gpt_refact", "gemma", "llama", "mistral", "qwen2", "chatglm"]:
+                self.model = AutoModelForCausalLM.from_pretrained(model_name_or_path, **model_kwargs)
+            else:
+                raise ValueError(f"Unsupported model type: {config.model_type}")
+            self.model = self.model.eval()
+        return (
+            self.model,
+            self.tokenizer,
+        )
+
+    @classmethod
+    def original_IS_CHANGED(s):
+        # 生成当前时间的哈希值
+        hash_value = hashlib.md5(str(datetime.datetime.now()).encode()).hexdigest()
+        return hash_value
+
+class ClearVRAM:
+    def __init__(self):
+        pass
+
+    OUTPUT_NODE = True  # Marks this node as an output node
+
+    @classmethod
+    def IS_CHANGED(cls, *args):
+        # Always consider this node as changed to ensure it runs
+        return float("NaN")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "flow": ("FLOW_CONTROL",),  # A flow control input to connect with other nodes
+            },
+        }
+
+    RETURN_TYPES = ("FLOW_CONTROL",)
+    RETURN_NAMES = ("flow",)
+    FUNCTION = "clear_vram"
+    CATEGORY = "LLM Evaluation"
+
+    def clear_vram(self, flow):
+        try:
+            # Clear PyTorch GPU cache
+            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
+            print("VRAM usage cleared successfully.")
+            return (flow,)  # Return the flow control to continue execution
+        except Exception as e:
+            print(f"Error clearing VRAM: {e}")
+            return (flow,)  # Return the flow control even if there's an error
+
+
+class StringPatternEnforcer:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "text": ("STRING", {"default": ""}),  # Input text to modify
+                "pattern": ("STRING", {"default": "."}),  # Pattern to enforce or remove
+                "position": (["left", "right"], {"default": "right"}),  # Position to enforce or remove the pattern
+                "action": (["enforce", "remove"], {"default": "enforce"}),  # Action to perform
+            },
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("modified_string",)
+    FUNCTION = "modify_string"
+    CATEGORY = "LLM Evaluation"
+
+    def modify_string(self, text, pattern, position, action):
+        try:
+            if position == "left":
+                if action == "enforce":
+                    # Add the pattern to the left if it does not exist
+                    if not text.startswith(pattern):
+                        text = pattern + text
+                elif action == "remove":
+                    # Remove the pattern from the left if it exists
+                    text = re.sub(f"^{re.escape(pattern)}", "", text)
+            elif position == "right":
+                if action == "enforce":
+                    # Add the pattern to the right if it does not exist
+                    if not text.endswith(pattern):
+                        text = text + pattern
+                elif action == "remove":
+                    # Remove the pattern from the right if it exists
+                    text = re.sub(f"{re.escape(pattern)}$", "", text)
+
+            return (text,)
+        except Exception as e:
+            return (f"Error: {e}",)
+
+
+class StringCombiner:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "string1": ("STRING", {"default": ""}),  # First input string
+                "string2": ("STRING", {"default": ""}),  # Second input string
+            },
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("combined_string",)
+    FUNCTION = "combine_strings"
+    CATEGORY = "LLM Evaluation"
+
+    def combine_strings(self, string1, string2):
+        try:
+            # Concatenate the two input strings
+            combined_string = string1 + string2
+            return (combined_string,)
+        except Exception as e:
+            return (f"Error: {e}",)
+
+
+class StringScraper:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "text": ("STRING", {"default": ""}),  # Input text from which to remove the pattern
+                "pattern": ("STRING", {"default": ""}),  # Regex pattern to remove from the string
+            },
+            "optional": {
+                "left_trim": (["enable", "disable"], {"default": "enable"}),  # Option to trim left spaces
+                "right_trim": (["enable", "disable"], {"default": "enable"}),  # Option to trim right spaces
+            },
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("modified_string",)
+    FUNCTION = "scrape_and_remove"
+    CATEGORY = "LLM Evaluation"
+
+    def scrape_and_remove(self, text, pattern, left_trim="enable", right_trim="enable"):
+        try:
+            # Use regex to remove the pattern from the text
+            modified_string = re.sub(pattern, '', text)
+
+            # Apply optional left and right trimming
+            if left_trim == "enable":
+                modified_string = modified_string.lstrip()
+            if right_trim == "enable":
+                modified_string = modified_string.rstrip()
+
+            return (modified_string,)
+        except Exception as e:
+            return (f"Error: {e}",)
+
+
+
 
 class WriteToJson:
     def __init__(self):
@@ -167,6 +526,11 @@ class PullOllamaModel:
         self.progress = ""
 
     OUTPUT_NODE = True
+
+    @classmethod
+    def IS_CHANGED(cls, model_name, token):
+        # Return NaN to force the node to always be considered as changed
+        return float("NaN")
 
     @classmethod
     def INPUT_TYPES(cls):

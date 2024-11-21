@@ -7,7 +7,6 @@ class F1ScoreNode:
     def __init__(self):
         pass
 
-    OUTPUT_NODE = True
     @classmethod
     def IS_CHANGED(cls, model_name):
         # Return NaN to force the node to always be considered as changed
@@ -62,7 +61,6 @@ class AccuracyNode:
     def __init__(self):
         pass
 
-    OUTPUT_NODE = True
     @classmethod
     def IS_CHANGED(cls, model_name):
         # Return NaN to force the node to always be considered as changed
@@ -101,7 +99,7 @@ class AccuracyNode:
             generated_responses = [item.get(generated_response_key, "").strip() for item in data]
 
             # Calculate accuracy
-            acc = accuracy_score(true_values, generated_responses, normalize=False)
+            acc = accuracy_score(true_values, generated_responses)
             return (acc,)
         except FileNotFoundError:
             return ("Error: The specified file was not found.",)

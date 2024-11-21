@@ -1,0 +1,2014 @@
+{
+  "last_node_id": 167,
+  "last_link_id": 303,
+  "nodes": [
+    {
+      "id": 57,
+      "type": "easy showAnything",
+      "pos": {
+        "0": 360,
+        "1": -265
+      },
+      "size": {
+        "0": 210,
+        "1": 80
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 58,
+          "shape": 7,
+          "label": "输入任何"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null,
+          "label": "output"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "4"
+      ]
+    },
+    {
+      "id": 43,
+      "type": "JSONToListNode",
+      "pos": {
+        "0": -961,
+        "1": 177
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "json_string",
+          "type": "STRING",
+          "link": 35,
+          "widget": {
+            "name": "json_string"
+          },
+          "label": "json_string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "converted_list",
+          "type": "LIST",
+          "links": [
+            36
+          ],
+          "slot_index": 0,
+          "label": "converted_list"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JSONToListNode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 77,
+      "type": "json_writing",
+      "pos": {
+        "0": -980,
+        "1": 516
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 147,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 98,
+          "widget": {
+            "name": "file_path"
+          },
+          "label": "file_path"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "links": [
+            150
+          ],
+          "slot_index": 0,
+          "label": "file_path"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "json_writing"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "extend"
+      ]
+    },
+    {
+      "id": 110,
+      "type": "DeleteFile",
+      "pos": {
+        "0": -978,
+        "1": 368
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 149,
+          "label": "any"
+        },
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "link": 148,
+          "widget": {
+            "name": "filepath"
+          },
+          "label": "filepath"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            147
+          ],
+          "slot_index": 0,
+          "label": "any"
+        }
+      ],
+      "title": "DeleteIfExist",
+      "properties": {
+        "Node name for S&R": "DeleteFile"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 113,
+      "type": "StringScraper",
+      "pos": {
+        "0": 771,
+        "1": 825
+      },
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": 0,
+          "link": 159,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "modified_string",
+          "type": "STRING",
+          "links": [
+            164
+          ],
+          "slot_index": 0,
+          "label": "modified_string"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringScraper"
+      },
+      "widgets_values": [
+        "",
+        "Answer:",
+        "enable",
+        "enable"
+      ]
+    },
+    {
+      "id": 118,
+      "type": "StringCombiner",
+      "pos": {
+        "0": 767,
+        "1": 671
+      },
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string2",
+          "type": "STRING",
+          "link": 164,
+          "widget": {
+            "name": "string2"
+          },
+          "label": "string2"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "combined_string",
+          "type": "STRING",
+          "links": [
+            167
+          ],
+          "slot_index": 0,
+          "label": "combined_string"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringCombiner"
+      },
+      "widgets_values": [
+        "Answer:",
+        ""
+      ]
+    },
+    {
+      "id": 119,
+      "type": "StringPatternEnforcer",
+      "pos": {
+        "0": 765,
+        "1": 473
+      },
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 167,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "modified_string",
+          "type": "STRING",
+          "links": [
+            168
+          ],
+          "slot_index": 0,
+          "label": "modified_string"
+        }
+      ],
+      "title": "Ensure no . at the end",
+      "properties": {
+        "Node name for S&R": "StringPatternEnforcer"
+      },
+      "widgets_values": [
+        "",
+        ".",
+        "right",
+        "remove"
+      ]
+    },
+    {
+      "id": 116,
+      "type": "Note",
+      "pos": {
+        "0": 1122,
+        "1": 615
+      },
+      "size": {
+        "0": 213.21414184570312,
+        "1": 167.98500061035156
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "The purpose of these string operation is our dataset set the ground true answe as \"Answer:xxx\". But the LLM are unable to generate answers consistently in this format"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 114,
+      "type": "easy showAnythingLazy",
+      "pos": {
+        "0": 245,
+        "1": 813
+      },
+      "size": {
+        "0": 470,
+        "1": 150
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 267,
+          "shape": 7,
+          "label": "anything"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            159
+          ],
+          "slot_index": 0,
+          "label": "output"
+        }
+      ],
+      "title": "Generated Response",
+      "properties": {
+        "Node name for S&R": "easy showAnythingLazy"
+      },
+      "widgets_values": [
+        "us-gaap:CostOfRevenues \n\nus-agap:grossProfit us-gastransaction:costORevenues -"
+      ]
+    },
+    {
+      "id": 81,
+      "type": "easy getNode",
+      "pos": {
+        "0": 480,
+        "1": 53
+      },
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            83
+          ],
+          "slot_index": 0,
+          "label": "*"
+        }
+      ],
+      "title": "⬅️ResponseJsonPath",
+      "properties": {},
+      "widgets_values": [
+        "ResponseJsonPath"
+      ],
+      "color": "#223"
+    },
+    {
+      "id": 42,
+      "type": "LoadFileNode",
+      "pos": {
+        "0": -989,
+        "1": -9
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            35,
+            57,
+            149
+          ],
+          "slot_index": 0,
+          "label": "text"
+        }
+      ],
+      "title": "Load Dataset.json",
+      "properties": {
+        "Node name for S&R": "LoadFileNode"
+      },
+      "widgets_values": [
+        "C:\\Programs\\ComfyUI-aki-v1.3\\input\\test.json"
+      ]
+    },
+    {
+      "id": 45,
+      "type": "SelectItemByIndexNode",
+      "pos": {
+        "0": -177,
+        "1": 40
+      },
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 57,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "link": 40,
+          "widget": {
+            "name": "index"
+          },
+          "label": "index"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "selected_item",
+          "type": "STRING",
+          "links": [
+            68
+          ],
+          "slot_index": 0,
+          "label": "selected_item"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SelectItemByIndexNode"
+      },
+      "widgets_values": [
+        "",
+        0
+      ]
+    },
+    {
+      "id": 82,
+      "type": "UpdateLLMResultToJson",
+      "pos": {
+        "0": 760,
+        "1": 77
+      },
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 83,
+          "widget": {
+            "name": "file_path"
+          },
+          "label": "file_path"
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "link": 84,
+          "widget": {
+            "name": "index"
+          },
+          "label": "index"
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 166,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status_message",
+          "type": "STRING",
+          "links": [
+            241
+          ],
+          "slot_index": 0,
+          "label": "status_message"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UpdateLLMResultToJson"
+      },
+      "widgets_values": [
+        "",
+        0,
+        "GeneratedResponse",
+        ""
+      ]
+    },
+    {
+      "id": 62,
+      "type": "easy setNode",
+      "pos": {
+        "0": -901,
+        "1": 680
+      },
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 150,
+          "label": "string"
+        }
+      ],
+      "outputs": [],
+      "title": "➡️ResponseJsonPath",
+      "properties": {
+        "previousName": "ResponseJsonPath"
+      },
+      "widgets_values": [
+        "ResponseJsonPath"
+      ],
+      "color": "#223"
+    },
+    {
+      "id": 89,
+      "type": "easy string",
+      "pos": {
+        "0": -1335,
+        "1": 415
+      },
+      "size": {
+        "0": 286.125,
+        "1": 103.35909271240234
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            98,
+            148
+          ],
+          "slot_index": 0,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy string"
+      },
+      "widgets_values": [
+        "C:\\Programs\\ComfyUI-aki-v1.3\\output\\output.json"
+      ]
+    },
+    {
+      "id": 122,
+      "type": "easy getNode",
+      "pos": {
+        "0": 1202,
+        "1": 164
+      },
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            171,
+            251
+          ],
+          "slot_index": 0,
+          "label": "*"
+        }
+      ],
+      "title": "⬅️ResponseJsonPath",
+      "properties": {},
+      "widgets_values": [
+        "ResponseJsonPath"
+      ],
+      "color": "#223"
+    },
+    {
+      "id": 71,
+      "type": "SelectItemByKeyNode",
+      "pos": {
+        "0": -172,
+        "1": 223
+      },
+      "size": {
+        "0": 315,
+        "1": 178
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 68,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "combined_value",
+          "type": "STRING",
+          "links": [
+            265
+          ],
+          "slot_index": 0,
+          "label": "combined_value"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SelectItemByKeyNode"
+      },
+      "widgets_values": [
+        "",
+        "query",
+        "text",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 155,
+      "type": "LLM",
+      "pos": {
+        "0": 223,
+        "1": 211
+      },
+      "size": {
+        "0": 443.4000244140625,
+        "1": 506
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 297,
+          "label": "model"
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7,
+          "label": "images"
+        },
+        {
+          "name": "extra_parameters",
+          "type": "DICT",
+          "link": null,
+          "shape": 7,
+          "label": "extra_parameters"
+        },
+        {
+          "name": "system_prompt_input",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "system_prompt_input"
+          },
+          "shape": 7,
+          "label": "system_prompt_input"
+        },
+        {
+          "name": "user_prompt_input",
+          "type": "STRING",
+          "link": 265,
+          "widget": {
+            "name": "user_prompt_input"
+          },
+          "shape": 7,
+          "label": "user_prompt_input"
+        },
+        {
+          "name": "tools",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "tools"
+          },
+          "shape": 7,
+          "label": "tools"
+        },
+        {
+          "name": "file_content",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "file_content"
+          },
+          "shape": 7,
+          "label": "file_content"
+        },
+        {
+          "name": "user_history",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "user_history"
+          },
+          "shape": 7,
+          "label": "user_history"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "assistant_response",
+          "type": "STRING",
+          "links": [
+            267
+          ],
+          "slot_index": 0,
+          "label": "assistant_response"
+        },
+        {
+          "name": "history",
+          "type": "STRING",
+          "links": null,
+          "label": "history"
+        },
+        {
+          "name": "tool",
+          "type": "STRING",
+          "links": null,
+          "label": "tool"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "label": "image"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM"
+      },
+      "widgets_values": [
+        "",
+        "",
+        0.7,
+        "enable",
+        "disable",
+        "disable",
+        "enable",
+        1920,
+        "",
+        "",
+        "",
+        "",
+        "",
+        100,
+        "",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 159,
+      "type": "PullOllamaModel",
+      "pos": {
+        "0": -540,
+        "1": 589
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model_name",
+          "type": "STRING",
+          "link": 271,
+          "widget": {
+            "name": "model_name"
+          },
+          "label": "model_name"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status_message",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "label": "status_message"
+        },
+        {
+          "name": "model_name",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "label": "model_name"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PullOllamaModel"
+      },
+      "widgets_values": [
+        "llama3.2"
+      ]
+    },
+    {
+      "id": 147,
+      "type": "F1ScoreNode",
+      "pos": {
+        "0": 1511,
+        "1": 68
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "*",
+          "link": 301,
+          "shape": 7,
+          "label": "flow"
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 251,
+          "widget": {
+            "name": "file_path"
+          },
+          "label": "file_path"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "f1_score",
+          "type": "FLOAT",
+          "links": [
+            284
+          ],
+          "slot_index": 0,
+          "label": "f1_score"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "F1ScoreNode"
+      },
+      "widgets_values": [
+        "",
+        "answer",
+        "GeneratedResponse"
+      ]
+    },
+    {
+      "id": 164,
+      "type": "easy showAnything",
+      "pos": {
+        "0": 1851,
+        "1": 80
+      },
+      "size": {
+        "0": 210,
+        "1": 76
+      },
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 284,
+          "shape": 7,
+          "label": "输入任何"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            285
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "0.0"
+      ]
+    },
+    {
+      "id": 120,
+      "type": "AccuracyNode",
+      "pos": {
+        "0": 1512,
+        "1": 246
+      },
+      "size": {
+        "0": 316.7642517089844,
+        "1": 132.1763153076172
+      },
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "*",
+          "link": 302,
+          "shape": 7,
+          "label": "flow"
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 171,
+          "widget": {
+            "name": "file_path"
+          },
+          "label": "file_path"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "accuracy",
+          "type": "FLOAT",
+          "links": [
+            286
+          ],
+          "slot_index": 0,
+          "label": "accuracy"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AccuracyNode"
+      },
+      "widgets_values": [
+        "",
+        "answer",
+        "GeneratedResponse"
+      ]
+    },
+    {
+      "id": 165,
+      "type": "easy showAnything",
+      "pos": {
+        "0": 1853,
+        "1": 248
+      },
+      "size": {
+        "0": 210,
+        "1": 76
+      },
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 286,
+          "shape": 7,
+          "label": "输入任何"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            287
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "0.0"
+      ]
+    },
+    {
+      "id": 72,
+      "type": "easy showAnythingLazy",
+      "pos": {
+        "0": 731,
+        "1": 267
+      },
+      "size": {
+        "0": 410,
+        "1": 140
+      },
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 168,
+          "shape": 7,
+          "label": "anything"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            166,
+            289
+          ],
+          "slot_index": 0,
+          "label": "output"
+        }
+      ],
+      "title": "Preprocessed Response",
+      "properties": {
+        "Node name for S&R": "easy showAnythingLazy"
+      },
+      "widgets_values": [
+        "Answer:us-gaap:CostOfRevenues \n\nus-agap:grossProfit us-gastransaction:costORevenues -"
+      ]
+    },
+    {
+      "id": 157,
+      "type": "LLM_api_loader",
+      "pos": {
+        "0": -167,
+        "1": 530
+      },
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model_name",
+          "type": "STRING",
+          "link": 273,
+          "widget": {
+            "name": "model_name"
+          },
+          "label": "model_name"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "links": [
+            296
+          ],
+          "slot_index": 0,
+          "label": "model"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM_api_loader"
+      },
+      "widgets_values": [
+        "llama3.2:1b",
+        "http://127.0.0.1:11434/v1/",
+        "ollama",
+        true
+      ]
+    },
+    {
+      "id": 40,
+      "type": "easy forLoopStart",
+      "pos": {
+        "0": -510,
+        "1": -148
+      },
+      "size": {
+        "0": 210,
+        "1": 94
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 296,
+          "shape": 7,
+          "label": "初始值1"
+        },
+        {
+          "name": "total",
+          "type": "INT",
+          "link": 303,
+          "widget": {
+            "name": "total"
+          },
+          "label": "总量"
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "links": [
+            224
+          ],
+          "slot_index": 0,
+          "label": "流",
+          "shape": 5
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "links": [
+            40,
+            58,
+            84
+          ],
+          "slot_index": 1,
+          "label": "索引"
+        },
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [
+            297,
+            298
+          ],
+          "slot_index": 2,
+          "label": "值1"
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopStart"
+      },
+      "widgets_values": [
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 137,
+      "type": "easy forLoopEnd",
+      "pos": {
+        "0": 1104,
+        "1": -135
+      },
+      "size": {
+        "0": 178,
+        "1": 106
+      },
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "link": 224,
+          "label": "流",
+          "shape": 5
+        },
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 298,
+          "shape": 7,
+          "label": "初始值1"
+        },
+        {
+          "name": "initial_value3",
+          "type": "*",
+          "link": 241
+        },
+        {
+          "name": "initial_value4",
+          "type": "*",
+          "link": 289
+        },
+        {
+          "name": "initial_value5",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [
+            299
+          ],
+          "slot_index": 0,
+          "label": "值1"
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value4",
+          "type": "*",
+          "links": [
+            290,
+            300
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "value5",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopEnd"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 167,
+      "type": "clear_model",
+      "pos": {
+        "0": 1360,
+        "1": -276
+      },
+      "size": {
+        "0": 315,
+        "1": 122
+      },
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 300,
+          "label": "any"
+        },
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 299,
+          "label": "model"
+        },
+        {
+          "name": "tokenizer",
+          "type": "CUSTOM",
+          "link": null,
+          "shape": 7,
+          "label": "tokenizer"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            301,
+            302
+          ],
+          "slot_index": 0,
+          "label": "any"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "clear_model"
+      },
+      "widgets_values": [
+        true,
+        true
+      ]
+    },
+    {
+      "id": 44,
+      "type": "easy lengthAnything",
+      "pos": {
+        "0": -587,
+        "1": 236
+      },
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 36,
+          "label": "any"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "length",
+          "type": "INT",
+          "links": [
+            303
+          ],
+          "slot_index": 0,
+          "label": "length"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy lengthAnything"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 158,
+      "type": "easy string",
+      "pos": {
+        "0": -549,
+        "1": 455
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            271,
+            273
+          ],
+          "slot_index": 0,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy string"
+      },
+      "widgets_values": [
+        "llama3.2:3b"
+      ]
+    },
+    {
+      "id": 140,
+      "type": "JsonResultGenerator",
+      "pos": {
+        "0": 2087,
+        "1": 55
+      },
+      "size": {
+        "0": 315,
+        "1": 438
+      },
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 245,
+          "widget": {
+            "name": "file_path"
+          },
+          "label": "file_path"
+        },
+        {
+          "name": "metric1_score",
+          "type": "FLOAT",
+          "link": 285,
+          "widget": {
+            "name": "metric1_score"
+          },
+          "shape": 7,
+          "label": "metric1_score"
+        },
+        {
+          "name": "metric2_score",
+          "type": "FLOAT",
+          "link": 287,
+          "widget": {
+            "name": "metric2_score"
+          },
+          "shape": 7,
+          "label": "metric2_score"
+        },
+        {
+          "name": "metric3_score",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "metric3_score"
+          },
+          "shape": 7,
+          "label": "metric3_score"
+        },
+        {
+          "name": "metric4_score",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "metric4_score"
+          },
+          "shape": 7,
+          "label": "metric4_score"
+        },
+        {
+          "name": "metric5_score",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "metric5_score"
+          },
+          "shape": 7,
+          "label": "metric5_score"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "json_file_path",
+          "type": "STRING",
+          "links": null,
+          "label": "json_file_path"
+        },
+        {
+          "name": "json_content",
+          "type": "STRING",
+          "links": [
+            259
+          ],
+          "slot_index": 1,
+          "label": "json_content"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JsonResultGenerator"
+      },
+      "widgets_values": [
+        "",
+        "pretrained",
+        "torch.float16",
+        "llama3.2:3b",
+        "main",
+        "XBRL-Extraction",
+        "F1",
+        0,
+        "Acc",
+        0,
+        "",
+        0,
+        "",
+        0,
+        "",
+        0
+      ]
+    },
+    {
+      "id": 150,
+      "type": "easy showAnything",
+      "pos": {
+        "0": 2479,
+        "1": 60
+      },
+      "size": {
+        "0": 623.0363159179688,
+        "1": 438.48504638671875
+      },
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 259,
+          "shape": 7,
+          "label": "输入任何"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "{\n    \"config\": {\n        \"model_type\": \"pretrained\",\n        \"model_dtype\": \"torch.float16\",\n        \"model_name\": \"Qwen/Qwen2-7B-Instruct\",\n        \"model_sha\": \"main\"\n    },\n    \"results\": {\n        \"XBRL-Extraction\": {\n            \"F1\": \"0.0\",\n            \"Acc\": \"0.0\"\n        }\n    }\n}"
+      ]
+    },
+    {
+      "id": 141,
+      "type": "easy string",
+      "pos": {
+        "0": 1519,
+        "1": -94
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            245
+          ],
+          "slot_index": 0,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy string"
+      },
+      "widgets_values": [
+        "C:\\Programs\\ComfyUI-aki-v1.3\\output\\llama3.2.3b.json"
+      ]
+    }
+  ],
+  "links": [
+    [
+      35,
+      42,
+      0,
+      43,
+      0,
+      "STRING"
+    ],
+    [
+      36,
+      43,
+      0,
+      44,
+      0,
+      "*"
+    ],
+    [
+      40,
+      40,
+      1,
+      45,
+      1,
+      "INT"
+    ],
+    [
+      57,
+      42,
+      0,
+      45,
+      0,
+      "STRING"
+    ],
+    [
+      58,
+      40,
+      1,
+      57,
+      0,
+      "*"
+    ],
+    [
+      68,
+      45,
+      0,
+      71,
+      0,
+      "STRING"
+    ],
+    [
+      83,
+      81,
+      0,
+      82,
+      0,
+      "STRING"
+    ],
+    [
+      84,
+      40,
+      1,
+      82,
+      1,
+      "INT"
+    ],
+    [
+      98,
+      89,
+      0,
+      77,
+      1,
+      "STRING"
+    ],
+    [
+      147,
+      110,
+      0,
+      77,
+      0,
+      "STRING"
+    ],
+    [
+      148,
+      89,
+      0,
+      110,
+      1,
+      "STRING"
+    ],
+    [
+      149,
+      42,
+      0,
+      110,
+      0,
+      "*"
+    ],
+    [
+      150,
+      77,
+      0,
+      62,
+      0,
+      "*"
+    ],
+    [
+      159,
+      114,
+      0,
+      113,
+      0,
+      "*"
+    ],
+    [
+      164,
+      113,
+      0,
+      118,
+      0,
+      "STRING"
+    ],
+    [
+      166,
+      72,
+      0,
+      82,
+      2,
+      "STRING"
+    ],
+    [
+      167,
+      118,
+      0,
+      119,
+      0,
+      "STRING"
+    ],
+    [
+      168,
+      119,
+      0,
+      72,
+      0,
+      "*"
+    ],
+    [
+      171,
+      122,
+      0,
+      120,
+      1,
+      "STRING"
+    ],
+    [
+      224,
+      40,
+      0,
+      137,
+      0,
+      "FLOW_CONTROL"
+    ],
+    [
+      241,
+      82,
+      0,
+      137,
+      2,
+      "*"
+    ],
+    [
+      245,
+      141,
+      0,
+      140,
+      0,
+      "STRING"
+    ],
+    [
+      251,
+      122,
+      0,
+      147,
+      1,
+      "STRING"
+    ],
+    [
+      259,
+      140,
+      1,
+      150,
+      0,
+      "*"
+    ],
+    [
+      265,
+      71,
+      0,
+      155,
+      4,
+      "STRING"
+    ],
+    [
+      267,
+      155,
+      0,
+      114,
+      0,
+      "*"
+    ],
+    [
+      271,
+      158,
+      0,
+      159,
+      0,
+      "STRING"
+    ],
+    [
+      273,
+      158,
+      0,
+      157,
+      0,
+      "STRING"
+    ],
+    [
+      284,
+      147,
+      0,
+      164,
+      0,
+      "*"
+    ],
+    [
+      285,
+      164,
+      0,
+      140,
+      1,
+      "FLOAT"
+    ],
+    [
+      286,
+      120,
+      0,
+      165,
+      0,
+      "*"
+    ],
+    [
+      287,
+      165,
+      0,
+      140,
+      2,
+      "FLOAT"
+    ],
+    [
+      289,
+      72,
+      0,
+      137,
+      3,
+      "*"
+    ],
+    [
+      290,
+      137,
+      3,
+      147,
+      0,
+      "*"
+    ],
+    [
+      296,
+      157,
+      0,
+      40,
+      0,
+      "*"
+    ],
+    [
+      297,
+      40,
+      2,
+      155,
+      0,
+      "CUSTOM"
+    ],
+    [
+      298,
+      40,
+      2,
+      137,
+      1,
+      "*"
+    ],
+    [
+      299,
+      137,
+      0,
+      167,
+      1,
+      "CUSTOM"
+    ],
+    [
+      300,
+      137,
+      2,
+      167,
+      0,
+      "*"
+    ],
+    [
+      301,
+      167,
+      0,
+      147,
+      0,
+      "*"
+    ],
+    [
+      302,
+      167,
+      0,
+      120,
+      0,
+      "*"
+    ],
+    [
+      303,
+      44,
+      0,
+      40,
+      1,
+      "INT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6303940863128502,
+      "offset": [
+        584.3182239005932,
+        396.1237390161969
+      ]
+    }
+  },
+  "version": 0.4
+}

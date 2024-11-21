@@ -1,4 +1,4 @@
-from .nodes import WriteToJson, DeleteFile, DownloadHuggingFaceModel, PullOllamaModel, UpdateLLMResultToJson, LoadFileNode, SelectItemByIndexNode, SelectItemByKeyNode, JSONToListNode, MathOperationNode
+from .nodes import JsonResultGenerator, LLMLocalLoader, ClearVRAM, StringPatternEnforcer, StringCombiner, StringScraper, WriteToJson, DeleteFile, DownloadHuggingFaceModel, PullOllamaModel, UpdateLLMResultToJson, LoadFileNode, SelectItemByIndexNode, SelectItemByKeyNode, JSONToListNode, MathOperationNode
 from .metrics import F1ScoreNode, AccuracyNode
 
 
@@ -15,6 +15,12 @@ NODE_CLASS_MAPPINGS = {
     "DownloadHuggingFaceModel": DownloadHuggingFaceModel,
     "DeleteFile": DeleteFile,
     "WriteToJson": WriteToJson,
+    "StringScraper": StringScraper,
+    "StringCombiner": StringCombiner,
+    "StringPatternEnforcer": StringPatternEnforcer,
+    "ClearVRAM": ClearVRAM,
+    "LLMLocalLoader": LLMLocalLoader,
+    "JsonResultGenerator": JsonResultGenerator,
 
 }
 
@@ -31,6 +37,12 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DownloadHuggingFaceModel": "DownloadHuggingFaceModel",
     "DeleteFile": "DeleteFile",
     "WriteToJson": "WriteToJson",
+    "StringScraper": "StringScraper",
+    "StringCombiner": "StringCombiner",
+    "StringPatternEnforcer": "StringPatternEnforcer",
+    "ClearVRAM": "ClearVRAM",
+    "LLMLocalLoader": "LLMLocalLoader",
+    "JsonResultGenerator": "JsonResultGenerator",
 
 }
 
